@@ -100,3 +100,32 @@ mutation{
     }
   }
 }
+
+
+
+AUTHORIZATION JWT
+
+
+
+query{
+  me {
+    id
+    username
+  }
+}
+
+
+
+mutation {
+  createLink (url: "https://github.com/BrunoOmoreshi", description: "Brunos Github") {
+    id
+    url
+    description
+    postedBy {
+      id
+      username
+      email
+    }
+  }
+}
+

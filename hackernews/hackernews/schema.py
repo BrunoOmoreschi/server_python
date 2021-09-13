@@ -1,13 +1,13 @@
 import graphene
-
+import users.schema
 import lincks.schema
 
 
-class Query(lincks.schema.Query, graphene.ObjectType):
+class Query(users.schema.Query, lincks.schema.Query, graphene.ObjectType):
     pass
 
 
-class Mutation(lincks.schema.Mutation, graphene.ObjectType):
+class Mutation(users.schema.Mutation, lincks.schema.Mutation, graphene.ObjectType):
     pass
 
 

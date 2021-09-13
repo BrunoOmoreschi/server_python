@@ -88,3 +88,15 @@ query {
     description
   }
 }
+
+
+
+mutation{
+  createUser(username: "bruno", email: "brunomoreschi.camposdesouza@gmail.com", password:"admin"){
+    user{
+      id
+      username
+      email
+    }
+  }
+}

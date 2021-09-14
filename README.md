@@ -64,23 +64,6 @@ class Query(lincks.schema.Query, graphene.ObjectType):
 schema = graphene.Schema(query=Query)
 ```
 
-
-
-
-
-mutation {
-  createLink(
-    url: "http//github.com",
-    description: "Lots of Code!"
-  ){
-    id
-    url
-    description
-  }
-}
-
-
-
 query {
   links{
     id

@@ -1,4 +1,4 @@
-![header](D:\Programation\graphql\server_python\header.png)
+![header](https://github.com/BrunoOmoreshi/server_python/blob/main/header.png)
 
 # Introduction
 
@@ -73,14 +73,14 @@ python manage.py runserver
 
 ## Some pictures
 
-![thunderclient](D:\Programation\graphql\server_python\thunderclient.png)
+![thunderclient](https://github.com/BrunoOmoreshi/server_python/blob/main/thunderclient.png)
 
 Here we can see Thunder Client in action, on VS Code. This picture shows the creation of a link with a URL, some description and also the information about the person who made the post - in this case, me. Its needed to open the tab "Headers" and add "AUTHORIZATION" and JWT and the user token, as one can see in the tutorial page.
 
-![pyCharm_server](D:\Programation\graphql\server_python\pyCharm_server.png)
+![pyCharm_server](https://github.com/BrunoOmoreshi/server_python/blob/main/pyCharm_server.png)
 
 This picture shows the server running on pyCharm. Note that I needed to change the project settings to make some imports work. Thats the reason of the orange folder on the project.
 
-![browser](D:\Programation\graphql\server_python\browser.png)
+![browser](https://github.com/BrunoOmoreshi/server_python/blob/main/browser.png)
 
 Now we see the embeded playground of GraphQL that works on browser. Why not follow all the project using this. Wel the thing is that our project uses a moder login method, by tokens, wich unfortunately is not suported by the browser version directly.

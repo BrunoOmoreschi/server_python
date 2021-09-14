@@ -2,7 +2,8 @@ import graphene
 from graphene_django import DjangoObjectType
 from users.schema import UserType
 from .models import Link, Vote
-from graphql import GraphQLError
+from graphql import GraphQLError # graphQL native error handling lib.
+from django.db.models import Q # for search / filtering entries.
 
 
 class LinkType(DjangoObjectType):
@@ -15,10 +16,15 @@ class VoteType(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
-    links = graphene.List(LinkType)
+    links = graphene.List(LinkType, search=graphene.String())
     votes = graphene.List(VoteType)
 
-    def resolve_links(self, info, **kwargs):
+    def resolve_links(self, info, search=None, **kwargs):
+        if search:
+            filter = (
+                Q(url__icontains=search) |
+                Q(description__icontains=search)
+            )
         return Link.objects.all()
 
     def resolve_votes(self, info, **kwargs):

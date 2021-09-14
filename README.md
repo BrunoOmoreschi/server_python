@@ -112,3 +112,17 @@ mutation {
   }
 }
 
+Every time we change the data base schema we must to apply this to the DB instance. To do so:
+
+```python
+python manage.py makemigrations
+
+python manage.py migrate
+```
+
+Don't forget to be sure that you are in the root directory of the project:
+
+```
+cd /hackernews
+```
+

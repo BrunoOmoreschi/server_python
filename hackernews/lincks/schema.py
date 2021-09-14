@@ -2,13 +2,14 @@ import graphene
 from graphene_django import DjangoObjectType
 from users.schema import UserType
 from .models import Link, Vote
-from graphql import GraphQLError # graphQL native error handling lib.
-from django.db.models import Q # for search / filtering entries.
+from graphql import GraphQLError  # graphQL native error handling lib.
+from django.db.models import Q  # for search / filtering entries.
 
 
 class LinkType(DjangoObjectType):
     class Meta:
         model = Link
+
 
 class VoteType(DjangoObjectType):
     class Meta:
@@ -30,8 +31,8 @@ class Query(graphene.ObjectType):
         # Lil block that calls for search if its in the query.
         if search:
             filter = (
-                Q(url__icontains=search) |
-                Q(description__icontains=search)
+                    Q(url__icontains=search) |
+                    Q(description__icontains=search)
             )
             qs = qs.filter(filter)
 
@@ -101,8 +102,22 @@ class CreateVote(graphene.Mutation):
         return CreateVote(user=user, link=link)
 
 
+class DeleteLink(graphene.Mutation):
+    # The class attributes define the response of the mutation
+    Link = graphene.Int()
+
+    class Arguments:
+        # The input arguments for this mutation
+        id = graphene.ID()
+
+    def mutate(self, info, id):
+        link = Link.objects.get(id=id)
+        if link is not None:
+            link.delete()
+        return DeleteLink(Link=link.id)
+
 
 class Mutation(graphene.ObjectType):
     create_link = CreateLink.Field()
     create_vote = CreateVote.Field()
-
+    delete_link = DeleteLink.Field()

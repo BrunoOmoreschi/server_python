@@ -78,6 +78,14 @@ class CreateLink(graphene.Mutation):
 
 
 class CreateVote(graphene.Mutation):
+    # Remember that is odd to allow a user to vote twice in a link,
+    # so you must to implement a method in client to before use this mutation
+    # check if there is a vote for this user.
+    # I could implement it here? Yes. But I don't feel it right. See,
+    # doing it here may create a dependency on the query code, or even a repeated
+    # block of code. Instead of the client may shot a query for the votes on a desired
+    # link with the context user. If there is none, call this method to create a vote.
+    # If there is already a vote, you can handle with a warning, for example.
     user = graphene.Field(UserType)
     link = graphene.Field(LinkType)
 
@@ -117,7 +125,38 @@ class DeleteLink(graphene.Mutation):
         return DeleteLink(Link=link.id)
 
 
+class DeleteVote(graphene.Mutation):
+    ok = graphene.Boolean()
+
+    class Arguments:
+        id = graphene.ID()
+        link_id = graphene.ID()
+
+    def mutate(self, info, id, link_id):
+        vote = Vote.objects.get(id=id)
+
+        # Check if the user is logged in.
+        user = info.context.user
+        if user.is_anonymous:
+            raise GraphQLError('You must be logged to vote!')
+
+        # Check if the link is valid.
+        # link = Link.objects.filter(id=link_id).first()
+        # if not link:
+        #    raise GraphQLError('Invalid Link!')
+
+        # Check if the vote is valid or xzq the deletion.
+        if vote is not None:
+            vote.delete()
+        else:
+            raise GraphQLError('Invalid vote!')
+        ok = True
+        return DeleteVote(ok=ok)
+
+
 class Mutation(graphene.ObjectType):
     create_link = CreateLink.Field()
-    create_vote = CreateVote.Field()
     delete_link = DeleteLink.Field()
+
+    create_vote = CreateVote.Field()
+    delete_vote = DeleteVote.Field()

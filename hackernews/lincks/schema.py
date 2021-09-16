@@ -111,6 +111,9 @@ class CreateVote(graphene.Mutation):
 
 
 class DeleteLink(graphene.Mutation):
+    # It will be cool to check if there is any vote on the link target,
+    # if yes, deletion forbidden, if not proceed to execution.
+
     # The class attributes define the response of the mutation
     Link = graphene.Int()
 
@@ -141,11 +144,11 @@ class DeleteVote(graphene.Mutation):
             raise GraphQLError('You must be logged to vote!')
 
         # Check if the link is valid.
-        # link = Link.objects.filter(id=link_id).first()
-        # if not link:
-        #    raise GraphQLError('Invalid Link!')
+        link = Link.objects.filter(id=link_id).first()
+        if not link:
+            raise GraphQLError('Invalid Link!')
 
-        # Check if the vote is valid or xzq the deletion.
+        # Check if the vote is valid or xzqt the deletion.
         if vote is not None:
             vote.delete()
         else:

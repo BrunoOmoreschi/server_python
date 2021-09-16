@@ -15,7 +15,6 @@ class LinkFilter(django_filters.FilterSet):
 class LinkNode(DjangoObjectType):
     class Meta:
         model = Link
-        # 3
         interfaces = (graphene.relay.Node,)
 
 

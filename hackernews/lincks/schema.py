@@ -132,7 +132,7 @@ class DeleteVote(graphene.Mutation):
     ok = graphene.Boolean()
 
     class Arguments:
-        id = graphene.ID()
+        id = graphene.ID('Vote Id.')
         link_id = graphene.ID()
 
     def mutate(self, info, id, link_id):
@@ -157,9 +157,43 @@ class DeleteVote(graphene.Mutation):
         return DeleteVote(ok=ok)
 
 
+class UpDateLink(graphene.Mutation):
+    # This function should only work when you can use the .filter to find
+    # the link we want to use .update. Which in turn will not overwrite these entries,
+    # instead of it will only change or add info.
+
+    ok = graphene.Boolean()
+
+    class Arguments:
+        # Required arguments.
+        id = graphene.ID(required=True)
+        # Non required but the ones you may wanna change.
+        url = graphene.String()
+        description = graphene.String()
+
+    def mutate(self, info, id, **update_data):
+        link = Link.objects.filter(id=id)
+
+        # Check if the user is logged in.
+        user = info.context.user
+        if user.is_anonymous:
+            raise GraphQLError('You must be logged to Edit these entries!')
+
+        if not link:
+            raise GraphQLError('The link yor are looking for may not exist!')
+        else:
+            params = update_data
+            link.update(**{k: v for k, v in params.items() if params[k]})
+            ok = True
+            return UpDateLink(ok=ok)
+
+
 class Mutation(graphene.ObjectType):
     create_link = CreateLink.Field()
     delete_link = DeleteLink.Field()
+    upDate_link = UpDateLink.Field()
 
     create_vote = CreateVote.Field()
     delete_vote = DeleteVote.Field()
+    # Todo implement this:
+    # upDate_vote = UpDateVote.Field()

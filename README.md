@@ -2,7 +2,7 @@
 
 # Introduction
 
-This project is the result of following the oficial tutorial for a server for backend clone of a blog caled "Hacker News".
+This project is the result of following the official tutorial for a server for backend clone of a blog called "Hacker News".
 
 The link of tutorial is: https://www.howtographql.com/graphql-python/0-introduction/ 
 

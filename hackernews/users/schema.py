@@ -29,6 +29,9 @@ class CreateUser(graphene.Mutation):
 
 class Mutation(graphene.ObjectType):
     create_user = CreateUser.Field()
+    # Todo implement this 2 features:
+    # update_user = UpdateUser.Field()
+    # delete_user = DeleteUser.Field()
 
 
 # Query 4 users

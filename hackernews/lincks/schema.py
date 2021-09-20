@@ -195,5 +195,4 @@ class Mutation(graphene.ObjectType):
 
     create_vote = CreateVote.Field()
     delete_vote = DeleteVote.Field()
-    # Todo implement this:
-    # upDate_vote = UpDateVote.Field()
+    # Vote can't be updated since it is only a "like", so or you have or have not.
